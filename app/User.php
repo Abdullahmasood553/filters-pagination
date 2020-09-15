@@ -49,8 +49,16 @@ class User extends Authenticatable
     }
 
 
-    public static function getUsers() {
+    public static function getUsers($search_keyword) {
         $users = DB::table('users');
+
+
+        if($search_keyword && !empty($search_keyword)) {
+            $users->where(function($q) use ($search_keyword) {
+                $q->where('users.fname', 'like', "%{$search_keyword}%")
+                ->orWhere('users.lname', 'like', "%{$search_keyword}%");
+            });
+        }
         return $users->paginate(PER_PAGE_LIMIT);
     }
 }

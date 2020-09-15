@@ -9,9 +9,6 @@
 </head>
 <body>
     @include('inc.header')
-
-  
-    
     <div class="main-box">
         @yield('content')
     </div>
