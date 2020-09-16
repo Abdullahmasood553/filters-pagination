@@ -33,8 +33,10 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'type' => $randomType,
         'country' => $faker->country,
+        'salary' => $faker->unique()->numberBetween($min = 1000, $max = 500000),
         'address' => $faker->address,
         'password' => Hash::make('123456'), 
+        'social_photo' => $faker->imageUrl($width = 200, $height = 200),
         'remember_token' => Str::random(10),
     ];
 });

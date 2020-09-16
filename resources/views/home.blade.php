@@ -2,6 +2,7 @@
 @section('content')
 
   @include('inc.search')
+  @include('inc.filter')
   <div id="user_data">
     @include('pages.user_data')
   </div>
