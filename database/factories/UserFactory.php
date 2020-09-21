@@ -17,16 +17,11 @@ use Illuminate\Support\Str;
 |
 */
 
+
 $factory->define(User::class, function (Faker $faker) {
     $user_types = [\App\Constants\GlobalConstants::USER_TYPE_FRONTEND,\App\Constants\GlobalConstants::USER_TYPE_BACKEND];
     $randomType = array_rand(array_flip($user_types));
     return [
-        // 'name' => $faker->name,
-        // 'email' => $faker->unique()->safeEmail,
-        // 'email_verified_at' => now(),
-        // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        // 'remember_token' => Str::random(10),
-
         'fname' => $faker->name,
         'lname' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -35,8 +30,8 @@ $factory->define(User::class, function (Faker $faker) {
         'country' => $faker->country,
         'salary' => $faker->unique()->numberBetween($min = 1000, $max = 500000),
         'address' => $faker->address,
-        'password' => Hash::make('123456'), 
-        'social_photo' => $faker->imageUrl($width = 200, $height = 200),
+        'password' => Hash::make('123456'),
+        'social_photo' => $faker->imageUrl($width = 200, $height = 200), 
         'remember_token' => Str::random(10),
     ];
 });

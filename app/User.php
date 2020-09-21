@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use DB;
+use App\Constants\GlobalConstants;
 
 class User extends Authenticatable
 {
@@ -49,7 +50,7 @@ class User extends Authenticatable
     }
 
 
-    public static function getUsers($search_keyword) {
+    public static function getUsers($search_keyword, $country, $sort_by, $range) {
         $users = DB::table('users');
 
 
@@ -59,6 +60,27 @@ class User extends Authenticatable
                 ->orWhere('users.lname', 'like', "%{$search_keyword}%");
             });
         }
+
+        // Filter By Country
+        if($country && $country!= GlobalConstants::ALL) {
+            $users = $users->where('users.country', $country);
+        }
+
+        // Filter By Type
+        if($sort_by) {
+            $sort_by = lcfirst($sort_by);
+            if($sort_by == GlobalConstants::USER_TYPE_FRONTEND) {
+                $users = $users->where('users.type', $sort_by);
+            } else if($sort_by == GlobalConstants::USER_TYPE_BACKEND) {
+                $users = $users->where('users.type', $sort_by);
+            }
+        }
+
+        // Filter By Salaries
+        if ($range && $range != GlobalConstants::ALL) {
+            $users = $users->where('users.salary', $range);
+        }
+
         return $users->paginate(PER_PAGE_LIMIT);
     }
 }
